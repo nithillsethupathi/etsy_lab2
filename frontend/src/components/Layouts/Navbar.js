@@ -1,10 +1,24 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 export default function Navbar(){
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   console.log(user)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const logout = () => {
+    dispatch({type: 'LOGOUT'});
+    navigate('/');
+    setUser(null);
+  }
+  useEffect(() => {
+    const token = user?.token;
+
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [location]);
+  
     return(
       <div className="flex min-h-full flex-col items-center">
         <nav className="mx-[20%] flex justify-center p-4">
@@ -22,7 +36,7 @@ export default function Navbar(){
               <button onClick={() => navigate('/auth')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white hover:bg-gray-200">Sign in</button>
             ) : (
               <div className="flex">
-              <button type="submit" className="w-[30%] mt-3 ml-4 flex rounded-full border-white hover:bg-gray-200">Sign Out</button>
+              <button onClick={logout} type="submit" className="w-[30%] mt-3 ml-4 flex rounded-full border-white hover:bg-gray-200">Sign Out</button>
               <button onClick={()=> navigate('/profile')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white">Profile</button>
               <button onClick={()=> navigate('/sell')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white">Sell</button>
               <button onClick={()=> navigate('/shop')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white">Shop</button>
