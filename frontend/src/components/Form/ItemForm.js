@@ -4,7 +4,7 @@ import {createItem} from '../../actions/items';
 
 const ItemForm = () => {
     const [itemData, setItemData] = useState({
-        title: '', image: '', category: '', price: '', description: '', user_id: ''
+        title: '', image: '', category: '', price: '', description: '', user_id: '', quantity: ''
     });
 
     const dispatch = useDispatch();
@@ -42,6 +42,12 @@ const ItemForm = () => {
                             category
                         </label>
                         <input value={itemData.category} onChange={(e) => setItemData({ ...itemData, category: e.target.value})} type="text" id="category" className="flex flex-wrap shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"></input>
+                    </div>
+                    <div className="flex mb-6">
+                        <label className="flex flex-wrap text-gray-700 mr-3 text-lg font-bold mb-2">
+                            quantity (default: 1)
+                        </label>
+                        <input value={itemData.quantity} onChange={(e) => setItemData({ ...itemData, quantity: e.target.value})} type="number" id="quantity" className="flex flex-wrap shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"></input>
                     </div>
                     <div className="flex mb-6">
                         <label className="flex flex-wrap text-gray-700 mr-3 text-lg font-bold mb-2">

@@ -1,13 +1,29 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {signin, signup} from "../../actions/auth"
+
+const initialState = {fullName: '', email: '', password: '', confirmPassword: ''};
 
 const Auth = () => {
-  const state = null;
   const [signUp, setSignUp] = useState(false);
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const [formData, setFormData] = useState(initialState);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if(signUp){
+      dispatch(signup(formData, navigate))
+    } else{
+      dispatch(signin(formData, navigate))
+    }
+  };
+
   const switchMode = (e) => {
     setSignUp((prevSignUp) => !prevSignUp);
   };
+  
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
@@ -25,14 +41,15 @@ const Auth = () => {
               >
                 <input
                   type="text"
-                  handleChange={handleChange}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value})}
                   className="block border border-grey-light w-full p-3 rounded mb-4"
-                  name="fullname"
+                  name="fullName"
                   placeholder="Full Name"
                 />
 
                 <input
                   type="email"
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value})}
                   className="block border border-grey-light w-full p-3 rounded mb-4"
                   name="email"
                   placeholder="Email"
@@ -40,14 +57,16 @@ const Auth = () => {
 
                 <input
                   type="password"
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value})}
                   className="block border border-grey-light w-full p-3 rounded mb-4"
                   name="password"
                   placeholder="Password"
                 />
                 <input
                   type="password"
+                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value})}
                   className="block border border-grey-light w-full p-3 rounded mb-4"
-                  name="confirm_password"
+                  name="confirmPassword"
                   placeholder="Confirm Password"
                 />
 
@@ -58,10 +77,10 @@ const Auth = () => {
                   Create Account
                 </button>
               </form>
-              <div class="text-grey-dark mt-6">
+              <div className="text-grey-dark mt-6">
                 Already have an account?
                 <button
-                  class="no-underline border-b border-blue text-blue"
+                  className="no-underline border-b border-blue text-blue"
                   onClick={switchMode}
                 >
                   Log in
@@ -70,11 +89,12 @@ const Auth = () => {
             </div>
           ) : (
             <div>
-              <form className="bg-white shadow-md rounded p-[2%] mb-[5%]">
+              <form onSubmit={handleSubmit} className="bg-white shadow-md rounded p-[2%] mb-[5%]">
                 <input
-                  type="text"
+                  type="email"
                   className="block border border-grey-light w-full p-3 rounded mb-4"
                   name="email"
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value})}
                   placeholder="Email"
                 />
 
@@ -82,6 +102,7 @@ const Auth = () => {
                   type="password"
                   className="block border border-grey-light w-full p-3 rounded mb-4"
                   name="password"
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value})}
                   placeholder="Password"
                 />
 
@@ -92,10 +113,10 @@ const Auth = () => {
                   Login
                 </button>
               </form>
-              <div class="text-grey-dark mt-6">
+              <div className="text-grey-dark mt-6">
                 Do not have an Account?
                 <button
-                  class="no-underline border-b border-blue text-blue"
+                  className="no-underline border-b border-blue text-blue"
                   onClick={switchMode}
                 >
                   Register

@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 export default function Navbar(){
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-  console.log(user)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
