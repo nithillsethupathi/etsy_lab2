@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar(){
-  const user = null;
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  console.log(user)
   const navigate = useNavigate();
     return(
       <div className="flex min-h-full flex-col items-center">
@@ -19,7 +21,12 @@ export default function Navbar(){
             {!user ? (
               <button onClick={() => navigate('/auth')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white hover:bg-gray-200">Sign in</button>
             ) : (
-              <h1>Hello Nithil</h1>
+              <div className="flex">
+              <button type="submit" className="w-[30%] mt-3 ml-4 flex rounded-full border-white hover:bg-gray-200">Sign Out</button>
+              <button onClick={()=> navigate('/profile')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white">Profile</button>
+              <button onClick={()=> navigate('/sell')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white">Sell</button>
+              <button onClick={()=> navigate('/shop')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white">Shop</button>
+              </div>
             )
             }
               
