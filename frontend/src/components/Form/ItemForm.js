@@ -1,16 +1,29 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import {createItem} from '../../actions/items';
 
 const ItemForm = () => {
-    const [itemData, setItemData] = useState({
-        title: '', image: '', category: '', price: '', description: '', user_id: '', quantity: ''
-    });
 
     const dispatch = useDispatch();
+    const location = useLocation();
+
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('profile')));
+      }, [location]);
+
+
+    const [itemData, setItemData] = useState({
+        title: '', image: '', category: '', price: '', quantity: 1, undefined, description: '', user_id: '', quantity: ''
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(user){
+            itemData.user_id = user.result._id; 
+        }
         dispatch(createItem(itemData));
     }
 
@@ -45,7 +58,7 @@ const ItemForm = () => {
                     </div>
                     <div className="flex mb-6">
                         <label className="flex flex-wrap text-gray-700 mr-3 text-lg font-bold mb-2">
-                            quantity (default: 1)
+                            quantity
                         </label>
                         <input value={itemData.quantity} onChange={(e) => setItemData({ ...itemData, quantity: e.target.value})} type="number" id="quantity" className="flex flex-wrap shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"></input>
                     </div>

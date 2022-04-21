@@ -1,8 +1,11 @@
 import express from "express";
-import { getItems, createItem, updateItem } from '../controllers/items.js'
+import { getItems, getItem, createItem, updateItem } from '../controllers/items.js'
+import auth from "../middleware/auth.js"
+
 const router = express.Router();
 
 router.get('/', getItems);
-router.post('/', createItem);
-router.patch('/:id', updateItem);
+router.get('/:id', getItem);
+router.post('/', auth, createItem);
+router.patch('/:id', auth, updateItem);
 export default router;

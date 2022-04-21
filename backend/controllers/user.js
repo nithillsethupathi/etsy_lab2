@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 import User from "../models/user.js";
 
@@ -39,4 +40,14 @@ export const signup = async (req, res) => {
     } catch (error) {
         res.status(500).json({message: "Something went wrong"});
     }
+}
+
+export const updateUser = async (req, res) => {
+    const { id: _id } = req.params;
+    const user = req.body;
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No User");
+
+    const updatedUser = User.findByIdAndUpdate(_id, user, {new: true});
+
+    res.json(updatedUser);
 }

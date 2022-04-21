@@ -6,10 +6,7 @@ const itemSchema = mongoose.Schema({
     category: String,
     price: Number,
     description: String,
-    quantity: {
-        type: Number,
-        default: 1
-    },
+    quantity: Number,
     user_id: String
 });
 

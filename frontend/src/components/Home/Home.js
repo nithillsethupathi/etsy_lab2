@@ -2,22 +2,32 @@ import Items from '../Items/Items';
 import ItemForm from '../Form/ItemForm';
 import {getItems} from '../../actions/items';
 import { useDispatch } from 'react-redux';
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Home = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
+    const navigate = useNavigate();
 
-    const user = null;
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+    useEffect(() => {
+        const token = user?.token;
+    
+        setUser(JSON.parse(localStorage.getItem('profile')));
+      }, [location]);
 
     useEffect(() => {
         dispatch(getItems());
     }, [dispatch])
+
     return (
         <div>
             <div className="w-full flex-auto bg-[#FDEBD2]">
                 <div className="w-full flex-auto flex-col justify-center px-20 text-center">
                     <h3 className="text-5xl font-serif ">
-                        Explore one-of-a-kind finds from independent makers
+                        {user && (<h3 className="text-5xl font-serif ">Hi {user?.result.fullName},</h3>)} Explore one-of-a-kind finds from independent makers
                     </h3>
 
                 </div>

@@ -7,7 +7,16 @@ export const getItems = async (req, res) => {
     } catch (error) {
         return res.status(404).json({message: error.message});
     }
-    return res.send('works');
+}
+
+export const getItem = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const item = await ItemMessage.findById(id);
+        return res.status(200).json(item);
+    } catch (error) {
+        return res.status(404).json({message: error.message});
+    }
 }
 
 export const createItem = async (req, res) => {

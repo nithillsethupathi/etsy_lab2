@@ -1,11 +1,19 @@
+import { useNavigate } from "react-router-dom";
+
 const Item = ({ item }) => {
+
+  const navigate = useNavigate();
+  const openItem = () => {
+    navigate(`/items/${item._id}`);
+  }
+
   return (
     <div key={item.id} className="w-full overflow-hidden">
 
       <img alt="item" className="rounded-sm h-64 w-64" src={String(item.image)} />
-      <a href="" className='text-2xl text-orange-400'>
+      <button onClick={openItem} className='text-2xl text-orange-400'>
         {item.title}
-      </a>
+      </button>
       <p>
       </p>
       <p>
