@@ -11,6 +11,6 @@ const orderSchema = mongoose.Schema({
 });
 
 orderSchema.plugin(AutoIncrement, {inc_field: 'orderNo'})
-const order = mongoose.model('order', orderSchema);
+const Order = mongoose.model('Order', orderSchema);
 
-export default order;
+export default Order;

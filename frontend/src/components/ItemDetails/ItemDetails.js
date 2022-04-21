@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import {getItem} from "../../actions/items"
-import {createFav} from "../action/items"
+import {createFav} from "../../actions/items"
 const ItemDetails = () => {
     
     const navigate = useNavigate();
