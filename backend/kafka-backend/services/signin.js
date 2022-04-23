@@ -1,6 +1,5 @@
 import { connect } from './mongo';
-import { compare } from 'bcrypt';
-
+import {compare} from "bcryptjs";
 
 export default function handle_request(msg, callback){
     var res = {};
