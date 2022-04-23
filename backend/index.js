@@ -9,7 +9,6 @@ dotenv.config()
 import itemRoutes from './routes/items.js';
 import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/users.js';
-
 const app = express();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
