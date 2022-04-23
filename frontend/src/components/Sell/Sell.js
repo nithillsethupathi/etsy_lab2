@@ -22,6 +22,7 @@ const Sell = () => {
         e.preventDefault();
         if(user){
             shop.userId = user.result._id;
+            console.log(shop.userId)
         }
         dispatch(createShop(shop));
     }

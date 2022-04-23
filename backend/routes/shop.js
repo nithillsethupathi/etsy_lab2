@@ -4,5 +4,5 @@ import auth from "../middleware/auth.js"
 
 const router = express.Router();
 
-router.post('/shop/create', auth, createShopName);
+router.post('/shop/create', createShopName);
 export default router;

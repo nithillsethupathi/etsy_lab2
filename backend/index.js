@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 import itemRoutes from './routes/items.js';
+import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/users.js';
 
 const app = express();
@@ -17,7 +18,7 @@ app.use(cors());
 
 app.use('/items', itemRoutes);
 app.use('/user', userRoutes);
-
+app.use('/shop', shopRoutes);
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
 const PORT = process.env.PORT || 5000;
