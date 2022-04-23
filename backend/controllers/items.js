@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import ItemMessage from "../models/itemMessage.js";
+import make_request from "../kafka/client.js";
+
 export const getItems = async (req, res) => {
     try {
         const itemMessages = await ItemMessage.find();
@@ -20,16 +22,25 @@ export const getItem = async (req, res) => {
 }
 
 export const createItem = async (req, res) => {
-    const item = req.body;
 
-    const newItem = new ItemMessage(item);
+    make_request('post_item',req.body, function(err,results){
+        console.log('in result');
+        console.log(results);
+        if (err){
+            console.log("Inside err");
+            res.json({
+                status:"error",
+                msg:"System Error, Try Again."
+            })
+        }else{
+            console.log("Inside else");
+                res.json({
+                    updatedList:results
+                });
+            }
+        
+    });
 
-    try{
-        await newItem.save();
-        return res.status(201).json(newItem);
-    } catch (error){
-        return res.status(409).json({message: error.message});
-    }
 }
 
 export const updateItem = async (req, res) => {

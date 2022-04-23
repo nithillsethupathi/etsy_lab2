@@ -3,5 +3,6 @@ import { createShopName } from '../controllers/shop.js'
 import auth from "../middleware/auth.js"
 
 const router = express.Router();
-router.post('/', createShopName);
+router.post('/', auth, createShopName);
+
 export default router;
