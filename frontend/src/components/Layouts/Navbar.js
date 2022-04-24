@@ -41,6 +41,7 @@ export default function Navbar(){
               <button onClick={()=> navigate('/profile')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white">Profile</button>
               <button onClick={()=> navigate('/sell')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white">Sell</button>
               <button onClick={()=> navigate('/shop')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white">Shop</button>
+              <button onClick={()=> navigate('/orders')} type="submit" className="w-[20%] mt-3 ml-4 flex rounded-full border-white">Orders</button>
               </div>
             )
             }
