@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import {getItem} from "../../actions/items"
 import {createFav} from "../../actions/items"
+import axios from 'axios'
 const ItemDetails = () => {
     
     const navigate = useNavigate();
@@ -29,9 +30,23 @@ const ItemDetails = () => {
         dispatch(createFav(item._id));
     }
 
-    const createCart = () => {
-
+    async function createCart() {
+        await axios.post('http://localhost:5000/api/cart/createCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                productId: String(item.id),
+                title: String(item.title),
+                price: Number(item.price),
+                image: String(item.image),
+                user: user.result._id
+            })
+        });
+        alert("Item added to your Cart")
     }
+
   return (
     <div className="mx-[20%] flex flex-wrap overflow-hidden">
 
@@ -60,7 +75,7 @@ const ItemDetails = () => {
                         </button>
                         </div>
                         <div>
-                        <button onClick={() => createCart()} className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        <button onClick={(e) => createCart(e)} className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                             Add to your Cart
                         </button>
                         </div>

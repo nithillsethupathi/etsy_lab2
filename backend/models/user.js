@@ -7,12 +7,15 @@ const userSchema = mongoose.Schema({
     city: {type: String},
     dateOfBith: {type: Date},
     about: {type: String},
-    favorites: [{
-        type: String
-    }],
-    orders: [{
-        type: String
-    }],
+    favorites: {
+        type: [String]
+    },
+    orders: {
+        type: [String]
+    },
+    cart: {
+        type: [String]
+    },
     id: {type: String}
 });
 

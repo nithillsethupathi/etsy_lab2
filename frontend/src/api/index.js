@@ -6,6 +6,7 @@ export const fetchItem = (id) => API.get(`/items/${id}`);
 export const fetchItems = () => API.get('/items');
 export const updateUser = (id) => API.post(`/user/${id}`)
 export const createItem = (newItem) => API.post('/items', newItem);
+// export const createCart = (title, price) => API.post('/cart/create', title, price)
 export const createShop = (shop) => API.post('/shop', shop);
 export const createFav = (fav) => API.post('/items/fav', fav);
 export const createOrder = (order) => API.post('/orders/createOrder', order);
