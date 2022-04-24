@@ -5,56 +5,38 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import CreateOrder from "../../actions/order.js";
 
 export default function Cart() {
-  const [data, setData] = useState([])
+const [data, dataSet] = useState(null)
+  console.log(data)
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false)
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
   useEffect(() => {
+    async function fetchMyAPI() {
+      let response = await axios.get('http://localhost:5000/cart/getCart')
+      dataSet(response)
+    }
+
+    fetchMyAPI()
+  }, [])
+
+  useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, [location]);
 
-  useEffect(() => {
-      setLoading(true)
-      axios.get('http://localhost:5000/api/cart/getCart')
-          .then((res) => res.json())
-          .then((data) => {
-              setData(data)
-              setLoading(false)
-          })
-  }, [])
-
   async function deleteAll(){
-    const response = await axios.post('http://localhost:5000/api/cart/deleteAll', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user: user.result._id
-        })
-    });
+    const response = await axios.post('http://localhost:5000/cart/deleteAll', {user: user.result._id})
     if (!response.ok) {
         throw new Error(response.statusText);
     }
 }
 
-  const deleteCart = async e => {
+  const deleteCart = async (e, item) => {
       e.preventDefault()
-      const val = e.target.getAttribute('id')
-      const response = await axios.post('http://localhost:5000/api/cart/deleteCart', {
-          method: 'DELETE',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              id: val
-          })
-      });
-      if (!response.ok) {
-          throw new Error(response.statusText);
-      }
+      console.log(item)
+      await axios.post('http://localhost:5000/cart/deleteCart', {productId: item})
+      window.location.reload();
   }
 
   async function createOrder(data){
@@ -79,15 +61,15 @@ export default function Cart() {
       await deleteAll()
       navigate('/');
   }  
-  
   return (
       <div className="mx-[20%]">
           <p className="text-3xl font-semibold mt-5 mb-5">Cart</p>
-          {data?.map(item => (
+          
+          {data?.data.map(item => (
               <div className="flex flex-wrap overflow-hidden mt-8 mb-8">
                   
                       <div className="w-1/4 overflow-hidden">
-                      <button id={item.id} onClick={(e) => deleteCart(e)} className=" mt-[15%] bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                      <button id={item._id} onClick={(e) => deleteCart(e, item._id)} className=" mt-[15%] bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                       Remove
                       </button>
                   </div>

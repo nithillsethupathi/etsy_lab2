@@ -15,7 +15,7 @@ export const getCart = async (req, res) => {
 export const createCart = async (req, res) => {
     const cart = req.body;
 
-    const newCart = new ItemMessage(cart);
+    const newCart = new Cart(cart);
 
     try{
         await newCart.save();
@@ -37,11 +37,8 @@ export const deleteAll = async (req, res) => {
 }
 
 export const deleteCart = async (req, res) => {
-    const { id: _id } = req.params;
-    const item = req.body;
 
-    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No item with that ID");
-
-    const updatedItem = await ItemMessage.findByIdAndUpdate(_id, item, { new: true } );
-    return res.json(updatedItem);
+    const {productId} = req.body;
+    const deleteItem = await Cart.findOneAndDelete({_id: productId});
+    return res.json(deleteItem);
 }

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const cart = mongoose.Schema({
+    productId: String,
     title: String,
     image: String,
     price: Number,

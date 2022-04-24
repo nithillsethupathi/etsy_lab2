@@ -30,20 +30,9 @@ const ItemDetails = () => {
         dispatch(createFav(item._id));
     }
 
+    const select_item = {productId: item.id, title: item.title, price: item.price, image: item.image, user_id: user.result._id}
     async function createCart() {
-        await axios.post('http://localhost:5000/api/cart/createCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                productId: String(item.id),
-                title: String(item.title),
-                price: Number(item.price),
-                image: String(item.image),
-                user: user.result._id
-            })
-        });
+        await axios.post('http://localhost:5000/cart/createCart', select_item)
         alert("Item added to your Cart")
     }
 

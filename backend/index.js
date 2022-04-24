@@ -9,6 +9,7 @@ dotenv.config()
 import itemRoutes from './routes/items.js';
 import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/users.js';
+import cartRoutes from './routes/cart.js';
 const app = express();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
@@ -18,6 +19,7 @@ app.use(cors());
 app.use('/items', itemRoutes);
 app.use('/user', userRoutes);
 app.use('/shop', shopRoutes);
+app.use('/cart', cartRoutes);
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
 const PORT = process.env.PORT || 5000;
