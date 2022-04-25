@@ -13,16 +13,24 @@ export const getCart = async (req, res) => {
 
 
 export const createCart = async (req, res) => {
-    const cart = req.body;
 
-    const newCart = new Cart(cart);
-
-    try{
-        await newCart.save();
-        return res.status(201).json(newCart);
-    } catch (error){
-        return res.status(409).json({message: error.message});
-    }
+    make_request('post_cart',req.body, function(err,results){
+        console.log('in result');
+        console.log(results);
+        if (err){
+            console.log("Inside err");
+            res.json({
+                status:"error",
+                msg:"System Error, Try Again."
+            })
+        }else{
+            console.log("Inside else");
+                res.json({
+                    updatedList:results
+                });
+            }
+        
+    });
 
 }
 

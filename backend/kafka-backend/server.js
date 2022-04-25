@@ -2,6 +2,8 @@ import ConnectionProvider from "./kafka/Connection.js";
 //topics files
 //var signin = require('./services/signin.js');
 import {Items} from "./services/items.js";
+import { Orders } from "./services/order.js";
+import { Cart } from "./services/cart.js";
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
 
@@ -44,3 +46,5 @@ async function handleTopicRequest(topic_name,fname){
 //first argument is topic name
 //second argument is a function that will handle this topic request
 handleTopicRequest("post_item", Items)
+handleTopicRequest("post_cart", Cart)
+handleTopicRequest("post_order", Orders)

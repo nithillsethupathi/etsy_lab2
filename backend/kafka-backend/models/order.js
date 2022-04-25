@@ -1,12 +1,10 @@
 import mongoose from 'mongoose';
+import Inc from "mongoose-sequence";
 
+const AutoIncrement = Inc(mongoose); 
 
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const orderSchema = mongoose.Schema({
-    itemId: [{
-        type: String
-    }],
     orderTotal: Number
 });
 
