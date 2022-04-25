@@ -3,7 +3,7 @@ import ConnectionProvider from "./kafka/Connection.js";
 //var signin = require('./services/signin.js');
 import {Items} from "./services/items.js";
 import { Orders } from "./services/order.js";
-import { Cart } from "./services/cart.js";
+import { ccart } from "./services/cart.js";
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
 
@@ -13,7 +13,7 @@ async function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
     const CONNECTION_URL = process.env.CONNECTION_URL;
     await mongoose.connect(CONNECTION_URL);
-    console.log("connected");
+    console.log("mongoose connected");
     var connection = new ConnectionProvider();
     var consumer = connection.getConsumer(topic_name);
     var producer = connection.getProducer();
@@ -23,7 +23,7 @@ async function handleTopicRequest(topic_name,fname){
         console.log(JSON.stringify(message.value));
         var data = JSON.parse(message.value);
         
-        Items(data.data, function(err,res){
+        fname(data.data, function(err,res){
             console.log('after handle'+res);
             var payloads = [
                 { topic: data.replyTo,
@@ -42,9 +42,7 @@ async function handleTopicRequest(topic_name,fname){
         
     });
 }
-// Add your TOPICs here
-//first argument is topic name
-//second argument is a function that will handle this topic request
+
 handleTopicRequest("post_item", Items)
-handleTopicRequest("post_cart", Cart)
+handleTopicRequest("post_cart", ccart)
 handleTopicRequest("post_order", Orders)

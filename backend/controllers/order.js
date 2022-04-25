@@ -1,4 +1,5 @@
 import Order from "../models/order.js"
+import make_request from "../kafka/client.js";
 
 export const createOrder = async (req, res)  => {
     make_request('post_order',req.body, function(err,results){

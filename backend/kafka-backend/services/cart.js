@@ -1,12 +1,11 @@
-import Cart from "../models/cart"
+import Cart from "../models/cart.js"
 
-export const Cart = async(msg, callback) => {
+export const ccart = async(msg, callback) => {
    
     console.log("Inside cart kafka backend");
-    console.log(msg);
     const carts = await new Cart(msg);
     await carts.save();
-    console.log(msg);
+    console.log(carts);
     callback(null, carts);
     console.log("after callback");
 };
