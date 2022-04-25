@@ -7,6 +7,7 @@ import Profile from './components/Profile/Profile'
 import Sell from './components/Sell/Sell'
 import Shop from './components/Shop/Shop'
 import Cart from './components/Cart/Cart'
+import Orders from './components/Orders/Orders'
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
           <Route exact path="/Shop" element={<Shop/>} />
           <Route exact path="/Sell" element={<Sell/>} />
           <Route exact path="/auth" element={<Auth/>} />
-          <Route exact path="cart" element={<Cart/>} />
+          <Route exact path="/cart" element={<Cart/>} />
+          <Route exact path="/orders" element={<Orders/>} />
           <Route exact path="/items/:id" element={<ItemDetails/>} />
         </Routes>
       </Layout>

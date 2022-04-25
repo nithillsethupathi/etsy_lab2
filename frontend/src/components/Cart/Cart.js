@@ -26,10 +26,8 @@ const [data, dataSet] = useState(null)
   }, [location]);
 
   async function deleteAll(){
-    const response = await axios.post('http://localhost:5000/cart/deleteAll', {user: user.result._id})
-    if (!response.ok) {
-        throw new Error(response.statusText);
-    }
+    await axios.post('http://localhost:5000/cart/deleteAll', {user_id: user.result._id})
+    window.location.reload();
 }
 
   const deleteCart = async (e, item) => {
@@ -39,28 +37,16 @@ const [data, dataSet] = useState(null)
       window.location.reload();
   }
 
-  async function createOrder(data){
-
-
-      await data.map((item) => {
-          console.log(item.id)
-          fetch(`/api/orders/createOrder`, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-                },
-              body: JSON.stringify({
-                  productId: String(item.id),
-                  title: String(item.title),
-                  image: String(item.image),
-                  price: Number(item.price),
-                  user: user.result._id
-              })
-          });
-      })
+  var total = 0;
+  data?.data.map(item => (
+      total = total + item.price
+  ))
+  async function createOrder(){
+      await axios.post(`http://localhost:5000/order/createOrder`, {orderTotal: total});
       await deleteAll()
       navigate('/');
   }  
+  
   return (
       <div className="mx-[20%]">
           <p className="text-3xl font-semibold mt-5 mb-5">Cart</p>
